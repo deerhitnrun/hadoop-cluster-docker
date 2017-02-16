@@ -69,7 +69,7 @@ This will allow Hadoop to start up in the Master and acknowledge the Hadoop slav
 gradle build
 ```
 
-### Test the MapREduce code
+### Test the MapReduce code
 
 ```
 gradle test
