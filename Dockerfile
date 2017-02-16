@@ -5,19 +5,18 @@ MAINTAINER KiwenLau <kiwenlau@gmail.com>
 WORKDIR /root
 
 # install openssh-server, openjdk and wget
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget
-
-COPY hadoop-dist/hadoop-2.7.3.tar.gz ./hadoop-2.7.3.tar.gz
+RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget unzip
 
 # install hadoop 2.7.3
-RUN tar -xzvf hadoop-2.7.3.tar.gz && \
+RUN wget http://www-us.apache.org/dist/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
+    tar -xzvf hadoop-2.7.3.tar.gz && \
     mv hadoop-2.7.3 /usr/local/hadoop && \
     rm hadoop-2.7.3.tar.gz
 
 # set environment variable
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 
 ENV HADOOP_HOME=/usr/local/hadoop 
-ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin 
+ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin 
 
 # ssh without key
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
@@ -49,7 +48,7 @@ RUN chmod +x ~/start-hadoop.sh && \
     chmod +x $HADOOP_HOME/sbin/start-yarn.sh 
 
 # format namenode
-RUN /usr/local/hadoop/bin/hdfs namenode -format
+RUN $HADOOP_HOME/bin/hdfs namenode -format
 
 CMD [ "sh", "-c", "service ssh start; bash"]
 
