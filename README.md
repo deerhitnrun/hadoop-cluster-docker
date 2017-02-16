@@ -7,94 +7,48 @@
 ![alt tag](https://raw.githubusercontent.com/kiwenlau/hadoop-cluster-docker/master/hadoop-cluster-docker.png)
 
 
-###3 Nodes Hadoop Cluster
+### Start Hadoop Cluster
 
-#####1. pull docker image
-
-```
-sudo docker pull kiwenlau/hadoop:1.0
-```
-
-#####2. clone github repository
-
-```
-git clone https://github.com/kiwenlau/hadoop-cluster-docker
-```
-
-#####3. create hadoop network
-
-```
-sudo docker network create --driver=bridge hadoop
-```
-
-#####4. start container
+#####1. Start the cluster nodes
 
 ```
 cd hadoop-cluster-docker
-sudo ./start-container.sh
+docker-compose up -d
 ```
+It will start 3 containers, 1 of them as master and 2 as slaves.
 
-**output:**
+You should get something like this:
 
 ```
 start hadoop-master container...
 start hadoop-slave1 container...
 start hadoop-slave2 container...
+```
+
+#####2. Open the Master node's shell
+
+```
+docker exec -it hadoop-master bash
+```
+
+You should get something like this:
+
+```
 root@hadoop-master:~# 
 ```
-- start 3 containers with 1 master and 2 slaves
-- you will get into the /root directory of hadoop-master container
 
-#####5. start hadoop
+This will put you in the /root directory of the hadoop-master container
+
+#####3. Start Hadoop from the Master node
 
 ```
 ./start-hadoop.sh
 ```
 
-#####6. run wordcount
+This will allow Hadoop to start up in the Master and acknowledge the Hadoop slaves.
+
+#####4. Run the Violence DB solution
 
 ```
-./run-wordcount.sh
+./run-violence.sh
 ```
-
-**output**
-
-```
-input file1.txt:
-Hello Hadoop
-
-input file2.txt:
-Hello Docker
-
-wordcount output:
-Docker    1
-Hadoop    1
-Hello    2
-```
-
-###Arbitrary size Hadoop cluster
-
-#####1. pull docker images and clone github repository
-
-do 1~3 like section A
-
-#####2. rebuild docker image
-
-```
-sudo ./resize-cluster.sh 5
-```
-- specify parameter > 1: 2, 3..
-- this script just rebuild hadoop image with different **slaves** file, which pecifies the name of all slave nodes
-
-
-#####3. start container
-
-```
-sudo ./start-container.sh 5
-```
-- use the same parameter as the step 2
-
-#####4. run hadoop cluster 
-
-do 5~6 like section A
-
