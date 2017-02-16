@@ -6,10 +6,20 @@
 
 ![alt tag](https://raw.githubusercontent.com/kiwenlau/hadoop-cluster-docker/master/hadoop-cluster-docker.png)
 
+### Prerrequisites
+
+- Docker (Tested on Docker 1.13.1 for MacOS)
+- Gradle (in case you want to tinker with the Java MapReduce code)
 
 ### Start Hadoop Cluster
 
-#####1. Start the cluster nodes
+#####1. Build image for Docker with everything required by Hadoop
+
+```
+./build_hadoop_image.sh
+```
+
+#####2. Start the cluster nodes
 
 ```
 cd hadoop-cluster-docker
@@ -25,7 +35,7 @@ start hadoop-slave1 container...
 start hadoop-slave2 container...
 ```
 
-#####2. Open the Master node's shell
+#####3. Open the Master node's shell
 
 ```
 docker exec -it hadoop-master bash
@@ -39,7 +49,7 @@ root@hadoop-master:~#
 
 This will put you in the /root directory of the hadoop-master container
 
-#####3. Start Hadoop from the Master node
+#####4. Start Hadoop from the Master node
 
 ```
 ./start-hadoop.sh
@@ -47,8 +57,20 @@ This will put you in the /root directory of the hadoop-master container
 
 This will allow Hadoop to start up in the Master and acknowledge the Hadoop slaves.
 
-#####4. Run the Violence DB solution
+#####5. Run the Violence DB solution
 
 ```
 ./run-violence.sh
+```
+
+### Build the MapReduce code
+
+```
+gradle build
+```
+
+### Test the MapREduce code
+
+```
+gradle test
 ```
