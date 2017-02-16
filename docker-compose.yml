@@ -1,0 +1,34 @@
+version: '2'
+services:
+  hadoop-master:
+    build: .
+    image: mnewball/hadoop-node:1.0
+    container_name: hadoop-master
+    stdin_open: true
+    tty: true
+    ports: 
+      - "50070:50070"
+      - "8088:8088"
+    links:
+      - hadoop-slave1
+      - hadoop-slave2
+    networks:
+      - hadoop
+  hadoop-slave1:
+    image: mnewball/hadoop-node:1.0
+    container_name: hadoop-slave1
+    stdin_open: true
+    tty: true
+    networks:
+      - hadoop
+  hadoop-slave2:
+    image: mnewball/hadoop-node:1.0
+    container_name: hadoop-slave2
+    stdin_open: true
+    tty: true
+    networks:
+      - hadoop
+
+networks:
+  hadoop:
+    driver: bridge
