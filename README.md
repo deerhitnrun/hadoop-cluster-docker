@@ -1,3 +1,7 @@
+This a fork from [kiwenlau/hadoop-cluster-docker](https://github.com/kiwenlau/hadoop-cluster-docker) with some improvements like Hadoop 2.7.3, and `docker-compose` for easier bootstrapping and tearing down of the cluster. `docker-compose` makes environment definition a lot clearer and scalable. Previously the environment was defined imperatively by means of a bash script. By using `docker-compose` the environment is a description rather than an algorithm.
+
+This fork also adds a MapReduce example which count the number of killings per year and country from a real terrorism data source. For more details about the data source, you can go to [Global Terrorism Database](https://www.kaggle.com/START-UMD/gtd).
+
 ##Run Hadoop Cluster within Docker Containers
 
 - Blog: [Run Hadoop Cluster in Docker Update](http://kiwenlau.com/2016/06/26/hadoop-cluster-docker-update-english/)
